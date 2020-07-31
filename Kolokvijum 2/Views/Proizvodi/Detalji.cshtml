@@ -1,0 +1,33 @@
+﻿@model Kolokvijum_2.Models.Proizvod
+@{
+    ViewBag.Title = "Detalji";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalji</h2>
+
+<p>Naziv proizvoda: </p>
+<p>@Model.Naziv</p><br>
+<p>Sorta proizvoda: </p>
+<p>@Model.Sorta</p><br>
+<p>Narodno ime proizvoda: </p>
+<p>@Model.NarodnoIme</p><br>
+<p>Boja proizvoda: </p>
+<p>@Model.Boja</p><br>
+<p>Poreklo proizvoda: </p>
+<p>@Model.Poreklo</p><br>
+<p>Opis proizvoda: </p>
+<p>@Model.Opis</p><br>
+<p>Cena po kg proizvoda: </p>
+<p>@Model.CenaPoKg</p><br>
+<p>Ukupna raspoloziva kolicina proizvoda: </p>
+<p>@Model.UkupnaKolicinaRaspolozivogProizvoda</p>
+
+<form method="post" action="~/Proizvodi/DodajUKorpu/@Model.Naziv/@Model.Sorta">
+
+    <label for="kolicina">Izaberite kolicinu proizvoda koji bi ste kupili</label><br>
+    <input type="number" name="kolicina" id="kolicina"><br>
+
+    <input type="submit" value="Potvrdi">
+</form>
+

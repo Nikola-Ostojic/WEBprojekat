@@ -1,0 +1,5 @@
+Kivi;Seviljska;Narandza;Narandzasta;Kina;Voce;110;35
+Banana;Musa;Banana;Zuta;Jugoistocna Azija;Voce;120;56
+Jabuka;Petrovaca;Jabuka;Crvena;Centralna Azija;Voce;130;125
+Kivi;Zeleni kivi;Kivi;zelen;Indija;Voce;134;130
+

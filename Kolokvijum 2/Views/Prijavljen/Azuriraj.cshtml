@@ -1,0 +1,37 @@
+﻿@model Kolokvijum_2.Models.Proizvod
+@{
+    ViewBag.Title = "Azuriraj";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Azuriraj</h2>
+
+<form action="~/Prijavljen/Azuriraj2/@Model.Naziv/@Model.Sorta" method="post">
+
+    <label for="naziv">Unesite naziv: </label><br>
+    <input type="text" name="naziv" id="naziv" value="@Model.Naziv"><br><br>
+
+    <label for="sorta">Unesite sortu: </label><br>
+    <input type="text" name="sorta" id="sorta" value="@Model.Sorta"><br><br>
+
+    <label for="narodno ime">Unesite narodno ime: </label><br>
+    <input type="text" name="narodno ime" id="narodno ime" value="@Model.NarodnoIme"><br><br>
+
+    <label for="boja">Unesite boja: </label><br>
+    <input type="text" name="boja" id="boja" value="@Model.Boja"><br><br>
+
+    <label for="poreklo">Unesite poreklo: </label><br>
+    <input type="text" name="poreklo" id="poreklo" value="@Model.Poreklo"><br><br>
+
+    <label for="opis">Unesite opis: </label><br>
+    <input type="text" name="opis" id="opis" value="@Model.Opis"><br><br>
+
+    <label for="cena">Unesite cenu: </label><br>
+    <input type="number" name="cena" id="cena" value="@Model.CenaPoKg"><br><br>
+
+    <label for="ukupna kolicina">Unesite ukupnu kolicinu: </label><br>
+    <input type="number" name="ukupna kolicina" id="ukupna kolicina" value="@Model.UkupnaKolicinaRaspolozivogProizvoda"><br><br>
+
+    <input type="submit" value="Potvrdi">
+</form>

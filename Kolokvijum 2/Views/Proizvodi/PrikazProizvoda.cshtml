@@ -1,0 +1,242 @@
+﻿@using Kolokvijum_2.Models;
+@{
+    ViewBag.Title = "Proizvodi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+    <head>
+
+        <style>
+            table{
+                position: center;
+            }
+
+            td, th{
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            form{
+                border: 1px thick #dddddd;
+            }
+
+        </style>
+    </head>
+    
+    <body>
+
+        <h2>Proizvodi</h2>
+        @{
+            Proizvod p = new Proizvod();
+
+            List<Proizvod> lista = p.Procitaj();
+
+            Korisnik korisnik = (Korisnik)Session["korisnik"];
+            string greska = ViewBag.greska;
+            string greska2 = ViewBag.greska2;
+            string greska3 = ViewBag.greska3;
+
+            if (!String.IsNullOrEmpty(greska))
+            {
+                <p style=" color: red ">Neuspesno dodavanje proizvoda od strane admina.</p><br><br>
+            }
+            else if (!String.IsNullOrEmpty(greska2))
+            {
+                <p style=" color: red ">Neuspesno azuriranje proizvoda od strane admina.</p><br><br>
+
+            }
+            if (!String.IsNullOrEmpty(greska3))
+            {
+                <p style=" color: red ">Nema dovoljne kolicine proizvoda.</p><br><br>
+            }
+        }
+
+        <table cellpadding="5" cellspacing="5" border="1">
+            <tr>
+                <th>
+                    Naziv
+                </th>
+
+                <th>
+                    Sorta
+                </th>
+
+                <th>
+                    Narodno Ime
+                </th>
+
+                <th>
+                    Boja
+                </th>
+
+                <th>
+                    Poreklo
+                </th>
+
+                <th>
+                    Opis
+                </th>
+
+                <th>
+                    Cena Po kg
+                </th>
+
+                <th>
+                    Ukupna Kolicina Raspolozivog Proizvoda [kg]
+                </th>
+                @if (korisnik != null && korisnik.UlogaProperty == Uloga.Kupac)
+                {
+                    <th>
+                        &nbsp;
+                    </th>
+                }
+                @if (korisnik != null && korisnik.UlogaProperty == Uloga.Administrator)
+                {
+                    <th>
+                        &nbsp;
+                    </th>
+                }
+            </tr>
+            @foreach (Proizvod proizvod in lista)
+            {
+                if (proizvod.UkupnaKolicinaRaspolozivogProizvoda == 0)
+                {
+                    continue;
+                }
+                <tr>
+                    <th>
+                        @proizvod.Naziv
+                    </th>
+
+                    <th>
+                        @proizvod.Sorta
+                    </th>
+
+                    <th>
+                        @proizvod.NarodnoIme
+                    </th>
+
+                    <th>
+                        @proizvod.Boja
+                    </th>
+
+                    <th>
+                        @proizvod.Poreklo
+                    </th>
+
+                    <th>
+                        @proizvod.Opis
+                    </th>
+
+                    <th>
+                        @proizvod.CenaPoKg
+                    </th>
+
+                    <th>
+                        @proizvod.UkupnaKolicinaRaspolozivogProizvoda
+                    </th>
+                    @if (korisnik != null && korisnik.UlogaProperty == Uloga.Administrator)
+                    {
+                        <th>
+                            <a href="~/Prijavljen/Azuriraj/@proizvod.Naziv/@proizvod.Sorta">Azuriraj</a>
+
+                        </th>
+                    }
+                    @if (korisnik != null && korisnik.UlogaProperty == Uloga.Kupac)
+                    {
+                        <th>
+                            <a href="/Proizvodi/Detalji/@proizvod.Naziv/@proizvod.Sorta">Detalji</a>
+                        </th>
+                    }
+                </tr>
+            }
+        </table><br><br>
+
+
+        <form method="post" action="~/Proizvodi/Sortiraj">
+
+            <label for="sortiraj">Sortiraj po: </label>
+            <select name="sortiraj" id="sortiraj">
+                <option value="Naziv">Naziv</option>
+                <option value="Sorta">Sorta</option>
+                <option value="Cena">Cena</option>
+            </select><br>
+
+            <label for="vrsta_sortiranja">Izaberi opadajuce ili rastuce: </label>
+            <select name="vrsta_sortiranja" id="vrsta_sortiranja">
+                <option value="Naziv">Rastuce</option>
+                <option value="Sorta">Opadajuce</option>
+            </select><br>
+
+            <input type="submit" value="Potvrdi">
+        </form><br><br>
+
+
+
+
+        <text>Pretrazi po nazivu ili sorti: </text><br>   <!-- Mogu li u obe forme isti name da bude za elemente. -->
+        <form method="post" action="~/Proizvodi/Pretrazi">
+
+            <label for="pretrazi_vrsta">Izaberi vrstu pretrazivanja</label>
+            <select name="pretrazi_vrsta" id="pretrazi_vrsta">
+                <option value="Naziv">Naziv</option>
+                <option value="Sorta">Sorta</option>
+            </select>
+
+            <label for="pretrazi_tekst">Unesite ime:</label><br>
+            <input type="text" name="pretrazi_tekst" id="pretrazi_tekst"><br>
+
+            <input type="submit" value="Potvrdi">
+        </form><br><br>
+
+
+
+        <form method="post" action="~/Proizvodi/PretraziPoCeni">
+            <text>Pretrazi po ceni: </text>
+
+            <label for="od">Unesite pretragu od:</label><br>
+            <input type="number" name="od" id="od"><br>
+
+            <label for="do">Unesite pretragu do:</label><br>
+            <input type="number" name="do" id="do"><br>
+
+            <input type="submit" value="Potvrdi">
+        </form><br><br>
+
+        @if (korisnik != null && korisnik.UlogaProperty == Uloga.Administrator)
+        {
+            <form method="post" action="~/Proizvodi/DodajProizvod">
+
+                <label for="naziv">Unesite naziv:</label><br>
+                <input type="text" name="naziv" id="naziv"><br>
+
+                <label for="sorta">Unesite sortu:</label><br>
+                <input type="text" name="sorta" id="sorta"><br>
+
+                <label for="narodno ime">Unesite narodno ime:</label><br>
+                <input type="text" name="narodno ime" id="narodno ime"><br>
+
+                <label for="boja">Unesite boju:</label><br>
+                <input type="text" name="boja" id="boja"><br>
+
+                <label for="poreklo">Unesite poreklo:</label><br>
+                <input type="text" name="poreklo" id="poreklo"><br>
+
+                <label for="opis">Unesite opis:</label><br>
+                <input type="text" name="opis" id="opis"><br>
+
+                <label for="cena">Unesite cenu:</label><br>
+                <input type="text" name="cena" id="cena"><br>
+
+                <label for="ukupna kolicina">Unesite ukupnu kolicinu:</label><br>
+                <input type="text" name="ukupna kolicina" id="ukupna kolicina"><br>
+
+                <input type="submit" value="Potvrdi">
+            </form><br><br>
+        }
+
+    </body>
+
+</html>

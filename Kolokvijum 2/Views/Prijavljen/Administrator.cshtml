@@ -1,0 +1,118 @@
+﻿@using Kolokvijum_2.Models
+@{
+    ViewBag.Title = "Prikaz kupaca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+
+    <style>
+        table {
+            position: center;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        form {
+            border: 1px thick #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Prikaz Kupaca</h2>
+    @{
+        Korisnik k = new Korisnik();
+        List<Korisnik> lista = k.Procitaj();
+    }
+
+    @if (String.Equals(ViewBag.obavestenje, "obrisan"))
+    {
+        <p>Korisnik je uspesno obrisan.</p><br>
+    }
+
+    <table cellpadding="5" cellspacing="5" border="1">
+        <tr>
+            <th>
+                Korisnicko ime
+            </th>
+
+            <th>
+                Lozinka
+            </th>
+
+            <th>
+                Ime
+            </th>
+
+            <th>
+                Prezime
+            </th>
+
+            <th>
+                Pol
+            </th>
+
+            <th>
+                Email
+            </th>
+
+            <th>
+                Datum rodjenja
+            </th>
+            <th>
+                &nbsp;
+            </th>
+        </tr>
+        @foreach (Korisnik korisnik in lista)
+        {
+            if (korisnik.Obrisan == true || korisnik.UlogaProperty == Uloga.Administrator)
+            {
+                continue;
+            }
+            <tr>
+                <th>
+                    @korisnik.KorisnickoIme
+                </th>
+
+                <th>
+                    @korisnik.Lozinka
+                </th>
+
+                <th>
+                    @korisnik.Ime
+                </th>
+
+                <th>
+                    @korisnik.Prezime
+                </th>
+
+                <th>
+                    @korisnik.PolProperty
+                </th>
+
+                <th>
+                    @korisnik.Email
+                </th>
+
+                <th>
+                    @korisnik.DatumRodjenja
+                </th>
+
+                <th>
+                    <a href="~/Prijavljen/Obrisi/@korisnik.KorisnickoIme">Obrisi</a>
+                </th>
+            </tr>
+        }
+    </table><br><br>
+
+</body>
+
+</html>
+

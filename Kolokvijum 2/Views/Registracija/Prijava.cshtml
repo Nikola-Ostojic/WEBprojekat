@@ -1,0 +1,49 @@
+﻿@using Kolokvijum_2.Models
+@{
+    ViewBag.Title = "Prijava";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Prijava</h2>
+
+@{
+    if (Session["korisnik"] == null)
+    {
+        //// Stop Caching in Firefox
+        Response.Cache.SetValidUntilExpires(true);
+        //// Stop Caching in IE
+        //Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //// Proxies.
+        Response.Cache.SetNoStore();
+        Response.Cache.SetExpires(DateTime.Now);
+    }
+
+}
+
+@{
+    string greska = ViewBag.greska;
+
+    if (!String.IsNullOrEmpty(greska))
+    {
+        <p style=" color: red ">Niste registrovani.</p><br><br>
+    }
+    else if (!String.IsNullOrEmpty(greska))
+    {
+        <p style=" color: red ">Pogresno uneti podaci.</p><br><br>
+    }
+}
+
+<form method="post" action="~/Prijavljen/Prijavljen">
+
+    <label for="korisnicko ime">Korisnicko ime: </label><br>
+    <input type="text" name="korisnicko ime" id="korisnicko ime"><br><br>
+
+    <label for="lozinka">Lozinka: </label><br>
+    <input type="password" name="lozinka" id="lozinka"><br><br>
+
+    <input type="submit" value="Potvrdi">
+
+</form><br><br>
+
+<text>Nemate nalog? Kliknite na link ispod: <br></text>
+<a href="~/Registracija/Registracija">Registracija</a>

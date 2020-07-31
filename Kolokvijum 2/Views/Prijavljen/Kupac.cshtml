@@ -1,0 +1,101 @@
+﻿@using Kolokvijum_2.Models;
+@using System.Web.Hosting;
+
+@{
+    ViewBag.Title = "Kupac";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+
+    <style>
+        table {
+            position: center;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        form {
+            border: 1px thick #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Prikaz Kupovina</h2>
+    @{
+        Kupovina k = new Kupovina();
+        List<Kupovina> lista = new List<Kupovina>();
+
+        if (File.Exists(HostingEnvironment.MapPath("~/App_Data/Kupovine.txt")))
+        {
+            lista = k.Procitaj();
+        }
+    }
+
+
+    <table cellpadding="5" cellspacing="5" border="1">
+        <tr>
+            <th>
+                Ime kupca
+            </th>
+
+            <th>
+                Naziv proizvoda
+            </th>
+
+            <th>
+                Datum kupovine
+            </th>
+
+            <th>
+                Narucena kolicina
+            </th>
+
+            <th>
+                Cena
+            </th>
+        </tr>
+
+        @if (lista != null)
+        {
+            foreach (Kupovina kupovina in lista)
+            {
+
+                <tr>
+                    <th>
+                        @kupovina.Kupac.KorisnickoIme
+                    </th>
+
+                    <th>
+                        @kupovina.ProizvodProperty.Naziv
+                    </th>
+
+                    <th>
+                        @kupovina.DatumKupovine
+                    </th>
+
+                    <th>
+                        @kupovina.NarucenaKolicina
+                    </th>
+
+                    <th>
+                        @kupovina.NaplacenaCena
+                    </th>
+                </tr>
+            }
+        }
+    </table><br><br>
+
+
+</body>
+
+</html>
+
+

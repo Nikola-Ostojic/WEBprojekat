@@ -1,0 +1,50 @@
+﻿@model Kolokvijum_2.Models.Proizvod
+@using Kolokvijum_2.Models
+@{
+    ViewBag.Title = "Pretrazi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pretrazi</h2>
+
+
+@{
+    string naziv;
+    string sorta;
+    string od = Request["od"];
+    string DO = Request["DO"];
+
+    if ((naziv = ViewBag.naziv) != null)
+    {
+        <p>Proizvod sa nazivom @naziv  je nadjen: </p><br>
+        <p>@Model.ToString()</p>
+        ViewBag.naziv = null;
+    }
+
+    if ((sorta = ViewBag.sorta) != null)
+    {
+        <p>Proizvod sorte @sorta  je nadjen.</p><br>
+        <p>@Model.ToString()</p>
+        ViewBag.sorta = null;
+    }
+
+    if (ViewBag.greska != 1 && ViewBag.pretrazeni != null)
+    {
+        <p>Proizvod sa cenom od @od do @DO je nadjen: </p><br>
+        foreach (Proizvod p in (List<Proizvod>)ViewBag.pretrazeni)
+        {
+            <p>@p.ToString()</p><br>
+        }
+    }
+
+    if (!String.IsNullOrEmpty(ViewBag.greska) &&  ViewBag.greska.Equals("1"))
+    {
+        <br><p>Korisnik nije nadjen</p>
+    }
+
+    if (!String.IsNullOrEmpty(ViewBag.greska) && ViewBag.greska.Equals("2"))
+    {
+        <br><p>Pogresan unos podataka</p>
+    }
+}
+
