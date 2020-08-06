@@ -8,4 +8,4 @@ C# in Visual Studio 2017 using ASP.NET MVC 5.
 
 # Created By
 
-Nikola Ostojic for faculty project on course: 'Web programming'.
+Nikola Ostojic for faculty project on course: "Web Programming".
